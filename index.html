@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shveta Portfolio</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* --- Base Resets & Variables --- */
+    :root {
+      --primary-color: #0f172a;
+      --secondary-color: #2563eb;
+      --accent-color: #38bdf8;
+      --text-main: #334155;
+      --text-light: #64748b;
+      --bg-light: #f8fafc;
+      --white: #ffffff;
+      --sidebar-width: 260px;
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-light);
+      color: var(--text-main);
+      display: flex;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: var(--transition);
+    }
+
+    /* --- Mobile Menu Toggle --- */
+    .menu-toggle {
+      display: none;
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      background: var(--secondary-color);
+      color: var(--white);
+      border: none;
+      padding: 12px 15px;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 1001;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    /* --- Sidebar Navigation --- */
+    .sidebar {
+      width: var(--sidebar-width);
+      background-color: var(--primary-color);
+      color: var(--white);
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      z-index: 1000;
+      transition: var(--transition);
+    }
+
+    .sidebar .profile {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      border: 4px solid var(--secondary-color);
+      overflow: hidden;
+      margin-bottom: 30px;
+      background: #fff;
+    }
+
+    .sidebar .profile img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      width: 100%;
+    }
+
+    .sidebar ul li {
+      margin-bottom: 10px;
+    }
+
+    .sidebar ul li a {
+      display: flex;
+      align-items: center;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #94a3b8;
+    }
+
+    .sidebar ul li a i {
+      margin-right: 15px;
+      width: 20px;
+      text-align: center;
+    }
+
+    .sidebar ul li a:hover, 
+    .sidebar ul li a.active {
+      color: var(--white);
+      background-color: var(--secondary-color);
+    }
+
+    /* --- Main Workspace Layout --- */
+    .main {
+      margin-left: var(--sidebar-width);
+      flex: 1;
+      width: calc(100% - var(--sidebar-width));
+      padding: 40px;
+      max-width: 1200px;
+      margin-right: auto;
+    }
+
+    /* --- Section Configurations --- */
+    .section {
+      padding: 60px 0;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      position: relative;
+      margin-bottom: 30px;
+      color: var(--primary-color);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 60px;
+      height: 4px;
+      background-color: var(--secondary-color);
+      border-radius: 2px;
+    }
+
+    /* --- Hero Layout --- */
+    .hero {
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-bottom: 40px;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      color: var(--primary-color);
+      line-height: 1.2;
+    }
+
+    .hero h1 span {
+      color: var(--secondary-color);
+    }
+
+    .hero h3 {
+      font-size: 1.8rem;
+      color: var(--text-light);
+      margin: 15px 0 20px 0;
+      font-weight: 400;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      max-width: 600px;
+      line-height: 1.7;
+      color: var(--text-main);
+      margin-bottom: 30px;
+    }
+
+    .social {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 35px;
+    }
+
+    .social a {
+      width: 45px;
+      height: 45px;
+      background-color: var(--white);
+      border: 1px solid #cbd5e1;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: var(--text-main);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .social a:hover {
+      background-color: var(--secondary-color);
+      color: var(--white);
+      border-color: var(--secondary-color);
+      transform: translateY(-3px);
+    }
+
+    .buttons {
+      display: flex;
+      gap: 15px;
+    }
+
+    .btn {
+      padding: 12px 28px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn.light {
+      background-color: var(--secondary-color);
+      color: var(--white);
+      border: none;
+    }
+
+    .btn.light:hover {
+      background-color: #1d4ed8;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+    }
+
+    .btn.outline {
+      background-color: transparent;
+      color: var(--secondary-color);
+      border: 2px solid var(--secondary-color);
+    }
+
+    .btn.outline:hover {
+      background-color: var(--secondary-color);
+      color: var(--white);
+    }
+
+    /* --- About Configuration --- */
+    #about p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    /* --- Cards Grid Framework (Experience / Edu / Contact) --- */
+    .exp-card, .edu-card, .contact-card {
+      background: var(--white);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+      border: 1px solid #e2e8f0;
+      margin-bottom: 20px;
+    }
+
+    .exp-card h3, .edu-card h3 {
+      font-size: 1.4rem;
+      color: var(--primary-color);
+    }
+
+    .exp-card span, .edu-card span {
+      display: block;
+      color: var(--text-light);
+      font-size: 0.9rem;
+      margin: 5px 0 15px 0;
+    }
+
+    .exp-card ul, .edu-card ul {
+      padding-left: 20px;
+      margin-bottom: 20px;
+    }
+
+    .exp-card li, .edu-card li {
+      margin-bottom: 8px;
+      line-height: 1.6;
+    }
+
+    /* --- Projects Grid Layout --- */
+    .projects-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+    }
+
+    .project-card {
+      background: var(--white);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+      padding: 25px;
+      transition: var(--transition);
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 20px rgba(0,0,0,0.08);
+    }
+
+    .project-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+      color: var(--primary-color);
+    }
+
+    .project-card p {
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+
+    /* --- Skills Sections --- */
+    .skill-box {
+      background: var(--white);
+      padding: 25px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      margin-bottom: 25px;
+    }
+
+    .skill-box h3 {
+      margin-bottom: 20px;
+      font-size: 1.2rem;
+      color: var(--text-light);
+      border-left: 3px solid var(--secondary-color);
+      padding-left: 10px;
+    }
+
+    .skill-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 20px;
+    }
+
+    .skill-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-light);
+      padding: 20px 10px;
+      border-radius: 8px;
+      text-align: center;
+      transition: var(--transition);
+    }
+
+    .skill-item:hover {
+      background: #edf2f7;
+      transform: translateY(-2px);
+    }
+
+    .skill-item img {
+      width: 45px;
+      height: 45px;
+      object-fit: contain;
+      margin-bottom: 10px;
+    }
+
+    .skill-item p {
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    /* --- Contact Dynamic List --- */
+    .contact-card {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    .contact-card p {
+      display: flex;
+      align-items: center;
+      font-size: 1rem;
+    }
+
+    .contact-card i {
+      font-size: 1.3rem;
+      margin-right: 12px;
+      color: var(--secondary-color);
+      width: 25px;
+      text-align: center;
+    }
+
+    .contact-card a:hover {
+      color: var(--secondary-color);
+    }
+
+    /* ==========================================================================
+       MEDIA QUERIES (Mobile, Tablet and Responsive Layout adjustments)
+       ========================================================================== */
+
+    @media (max-width: 992px) {
+      .menu-toggle {
+        display: block;
+      }
+
+      .sidebar {
+        left: calc(-1 * var(--sidebar-width));
+      }
+
+      .sidebar.active {
+        left: 0;
+      }
+
+      .main {
+        margin-left: 0;
+        width: 100%;
+        padding: 30px 20px;
+      }
+
+      .hero h1 {
+        font-size: 2.8rem;
+        margin-top: 40px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+
+      .hero h3 {
+        font-size: 1.3rem;
+      }
+
+      .buttons {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .btn {
+        width: 100%;
+        text-align: center;
+      }
+
+      .projects-container {
+        grid-template-columns: 1fr;
+      }
+
+      .skill-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 12px;
+      }
+      
+      .skill-item img {
+        width: 35px;
+        height: 35px;
+      }
+
+      .contact-card {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<button class="menu-toggle" onclick="toggleSidebar()">
+  <i class="fa fa-bars"></i>
+</button>
+
+<div class="sidebar" id="sidebar">
+  <div class="profile">
+    <img src="./img/shv.png" alt="Shveta Profile">
+  </div>
+
+  <ul>
+    <li><a href="#about" onclick="closeSidebar()"><i class="fa fa-user"></i>About</a></li>
+    <li><a href="#experience" onclick="closeSidebar()"><i class="fa fa-chart-line"></i>Experience</a></li>
+    <li><a href="#projects" onclick="closeSidebar()"><i class="fa fa-folder"></i>Projects</a></li>
+    <li><a href="#skills" onclick="closeSidebar()"><i class="fa fa-chart-bar"></i>Skills</a></li>
+    <li><a href="#education" onclick="closeSidebar()"><i class="fa fa-graduation-cap"></i>Education</a></li>
+    <li><a href="#contact" onclick="closeSidebar()"><i class="fa fa-envelope"></i>Contact</a></li>
+  </ul>
+</div>
+
+<div class="main">
+
+  <section class="hero">
+    <h1>Hi, I'm <span>Shveta Maddhesiya</span></h1>
+    <h3>A React Js | Node Js Developer</h3>
+    <p>
+      Self-driven, quick starter, passionate programmer with a curious mind who enjoys 
+      solving complex and challenging real-world problems.
+    </p>
+
+    <div class="social">
+      <a href="https://www.linkedin.com/in/shveta-maddhesiya" target="_blank" aria-label="LinkedIn">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+      <a href="https://github.com/shveta321" target="_blank" aria-label="GitHub">
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+
+    <div class="buttons">
+      <a href="#about" class="btn light">Read More</a>
+      <a href="#contact" class="btn outline">Contact Me</a>
+    </div>
+  </section>
+
+  <section id="about" class="section">
+    <h2 class="section-title">About Me</h2>
+    <p>
+      I am a trustworthy Software Developer with around 2+ years of practical experience 
+      and a strong dedication to delivering high-quality results. I am self-motivated and 
+      consistently strive to meet challenging targets and deadlines with efficiency.
+    </p>
+    <p>
+      I have a versatile skill set and the ability to work effectively both independently 
+      and as part of a team. I enjoy solving real-world problems and continuously improving 
+      my technical and problem-solving skills.
+    </p>
+    <p><b>Technical Skills-</b> JavaScript, React.js, Node.js, MySQL, CSS3, Bootstrap 4/5</p>
+  </section>
+
+  <section id="experience" class="section">
+    <h2 class="section-title">Experience</h2>
+    <div class="exp-card">
+      <h3>Software Developer</h3>
+      <span>Dec 2023  | Noida, India</span>
+      <ul>
+        <li>Developed 2+ web applications using React.js and Node.js.</li>
+        <li>Strong understanding of modern web technologies and web standard best practices.</li>
+        <li>Worked as an end-to-end web developer with specialization in UI/UX development.</li>
+        <li>Built responsive and user-friendly interfaces using CSS3, modern layouts, and Bootstrap frameworks.</li>
+        <li>Implemented structural grid management to scale web app interfaces fluidly across device types.</li>
+      </ul>
+      <p><strong>Tools & Technologies:</strong><br>
+        React.js, JavaScript, React Hooks, Redux, Bootstrap 4/5, CSS3
+      </p>
+    </div>
+  </section>
+
+  <section id="projects" class="section">
+    <h2 class="section-title">Projects</h2>
+    <div class="projects-container">
+      <div class="project-card">
+        <h3>Prakti Health International</h3>
+        <p>Developed Reservation System for Vehicle Maintenance and Management.</p>
+      </div>
+      <div class="project-card">
+        <h3>Real Estate Website Development</h3>
+        <p>Developed an e-commerce website for selling flowers.</p>
+      </div>
+      <div class="project-card">
+        <h3>Injection Molding Machine Website</h3>
+        <p>Developed the timeline layout for an integrated event management system.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" class="section">
+    <h2 class="section-title">SKILLS</h2>
+
+    <div class="skill-box">
+      <h3>Programming Languages</h3>
+      <div class="skill-grid">
+        <div class="skill-item">
+          <img src="https://cdn-icons-png.flaticon.com/512/5968/5968292.png" alt="JavaScript">
+          <p>JavaScript</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="skill-box">
+      <h3>Technologies</h3>
+      <div class="skill-grid">
+        <div class="skill-item"><img src="https://cdn-icons-png.flaticon.com/512/1126/1126012.png" alt="React JS"><p>React JS</p></div>
+        <div class="skill-item"><img src="https://cdn-icons-png.flaticon.com/512/732/732190.png" alt="CSS3"><p>CSS3</p></div>
+        <div class="skill-item"><img src="https://cdn-icons-png.flaticon.com/512/919/919825.png" alt="Node JS"><p>Node JS</p></div>
+        <div class="skill-item"><img src="https://cdn-icons-png.flaticon.com/512/919/919836.png" alt="MySQL"><p>MySQL</p></div>
+        <div class="skill-item"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968672.png" alt="Bootstrap"><p>Bootstrap 4/5</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="education" class="section">
+    <h2 class="section-title">Education</h2>
+    <div class="edu-card">
+      <h3>Bachelor of Technology (Electronics & Communication Engineering)</h3>
+      <h4>Dr. A.P.J. Abdul Kalam Technical University</h4>
+      <span>Lucknow, Uttar Pradesh, India</span>
+      <p style="margin: 10px 0;"><strong>Percentage:</strong> 62.10 / 100</p>
+      <p><strong>Relevant Coursework:</strong></p>
+      <ul style="margin-top: 5px;">
+        <li>Front-End Web Development</li>
+        <li>Backend Web Development</li>
+        <li>Mathematics</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="contact" class="section">
+    <h2 class="section-title">Contact</h2>
+    <div class="contact-card">
+      <p>
+        <i class="fa fa-phone"></i>
+        <a href="tel:+918604695002">+91 8604695002</a>
+      </p>
+      <p>
+        <i class="fab fa-whatsapp"></i>
+        <a href="https://wa.me/918604695002" target="_blank">WhatsApp Connect</a>
+      </p>
+      <p>
+        <i class="fa fa-envelope"></i>
+        <a href="mailto:sevetamaddhesiya@gmail.com">sevetamaddhesiya@gmail.com</a>
+      </p>
+      <p>
+        <i class="fab fa-github"></i>
+        <a href="https://github.com/shveta321" target="_blank">github.com/shveta321</a>
+      </p>
+      <p>
+        <i class="fab fa-linkedin"></i>
+        <a href="https://www.linkedin.com/in/shveta-maddhesiya" target="_blank">linkedin.com/in/shveta-maddhesiya</a>
+      </p>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  const sidebar = document.getElementById('sidebar');
+  
+  function toggleSidebar() {
+    sidebar.classList.toggle('active');
+  }
+
+  function closeSidebar() {
+    sidebar.classList.remove('active');
+  }
+
+  // Handle active class updates on page scroll
+  const sections = document.querySelectorAll('.section, .hero');
+  const navLi = document.querySelectorAll('.sidebar ul li a');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      if (pageYOffset >= (sectionTop - 150)) {
+        current = section.getAttribute('id') || '';
+      }
+    });
+
+    navLi.forEach(a => {
+      a.classList.remove('active');
+      if (a.getAttribute('href').includes(current) && current !== '') {
+        a.classList.add('active');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
